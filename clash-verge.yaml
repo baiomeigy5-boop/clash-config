@@ -8,6 +8,7 @@ allow-lan: false
 log-level: info
 secret: ''
 external-controller: 127.0.0.1:9097
+
 tun:
   stack: gvisor
   device: Meta
@@ -18,19 +19,20 @@ tun:
   - any:53
   mtu: 9000
   enable: true
+
 dns:
   enable: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   nameserver:
-  - 114.114.114.114
-  - 223.5.5.5
+  - 1.1.1.1
   - 8.8.8.8
   fallback: []
   fake-ip-filter:
   - dns.msftncsi.com
   - www.msftncsi.com
   - www.msftconnecttest.com
+
 proxy-providers:
   闪狐云:
     type: http
@@ -40,28 +42,30 @@ proxy-providers:
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
-      interval: 300
+      interval: 30
+
 proxy-groups:
-- name: 🇸🇬 新加坡 AUTO
-  type: url-test
+- name: 🇸🇬 新加坡
+  type: fallback
   use:
   - 闪狐云
   filter: (?i)sg|singapore|新加坡
   url: http://www.gstatic.com/generate_204
-  interval: 120
-  tolerance: 50
-- name: 🇯🇵 日本 AUTO
-  type: url-test
+  interval: 10
+
+- name: 🇯🇵 日本
+  type: fallback
   use:
   - 闪狐云
   filter: (?i)jp|japan|日本
   url: http://www.gstatic.com/generate_204
-  interval: 120
-  tolerance: 50
+  interval: 10
+
 - name: 🚀 Proxy
   type: select
   proxies:
-  - 🇸🇬 新加坡 AUTO
-  - 🇯🇵 日本 AUTO
+  - 🇸🇬 新加坡
+  - 🇯🇵 日本
+
 rules:
 - MATCH,🚀 Proxy
