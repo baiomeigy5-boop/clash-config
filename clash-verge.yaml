@@ -61,11 +61,20 @@ proxy-groups:
   url: http://www.gstatic.com/generate_204
   interval: 10
 
+- name: 🇺🇸 美國
+  type: fallback
+  use:
+  - 闪狐云
+  filter: (?i)us|united|america|美國
+  url: http://www.gstatic.com/generate_204
+  interval: 10
+
 - name: 🚀 Proxy
   type: select
   proxies:
   - 🇸🇬 新加坡
   - 🇯🇵 日本
+  - 🇺🇸 美國
 
 rules:
 - MATCH,🚀 Proxy
