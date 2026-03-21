@@ -34,69 +34,34 @@ dns:
   - www.msftconnecttest.com
 
 proxy-providers:
-  traveler1:
+  闪狐云:
     type: http
-    url: https://ps2-load.eu.org/api/v1/client/subscribe?token=cyjdkcgy2zmij3dbg7nan7w65atbs27t
+    url: https://a02.fflink.cc/api/v1/client/subscribe?token=95f0fa479d8f6429456e859435d7f036
     interval: 600
-    path: ./providers/traveler1.yaml
-    health-check:
-      enable: true
-      url: http://www.gstatic.com/generate_204
-      interval: 30
-
-  traveler2:
-    type: http
-    url: https://ps2-load.eu.org/api/v1/client/subscribe?token=fccb3172944b776b76dac0c0559e1514
-    interval: 600
-    path: ./providers/traveler2.yaml
+    path: ./providers/shanhu.yaml
     health-check:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 30
 
 proxy-groups:
-# --- traveler1 ---
-- name: 🇯🇵 日本1
-  type: fallback
+- name: 🇸🇬 新加坡
+  type: select
   use:
-  - traveler1
-  filter: (?i)jp|japan|日本
-  url: http://www.gstatic.com/generate_204
-  interval: 10
-
-- name: 🇸🇬 新加坡1
-  type: fallback
-  use:
-  - traveler1
+  - 闪狐云
   filter: (?i)sg|singapore|新加坡
-  url: http://www.gstatic.com/generate_204
-  interval: 10
 
-# --- traveler2 ---
-- name: 🇯🇵 日本2
-  type: fallback
+- name: 🇯🇵 日本
+  type: select
   use:
-  - traveler2
+  - 闪狐云
   filter: (?i)jp|japan|日本
-  url: http://www.gstatic.com/generate_204
-  interval: 10
 
-- name: 🇸🇬 新加坡2
-  type: fallback
-  use:
-  - traveler2
-  filter: (?i)sg|singapore|新加坡
-  url: http://www.gstatic.com/generate_204
-  interval: 10
-
-# --- 主選單 ---
 - name: 🚀 Proxy
   type: select
   proxies:
-  - 🇯🇵 日本1
-  - 🇯🇵 日本2
-  - 🇸🇬 新加坡1
-  - 🇸🇬 新加坡2
+  - 🇸🇬 新加坡
+  - 🇯🇵 日本
 
 rules:
 - MATCH,🚀 Proxy
