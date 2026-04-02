@@ -37,7 +37,7 @@ proxy-providers:
   闪狐云:
     type: http
     url: https://a02.fflink.cc/api/v1/client/subscribe?token=95f0fa479d8f6429456e859435d7f036
-    interval: 300
+    interval: 0
     path: ./providers/shanhu.yaml
     health-check:
       enable: false   # ❗關掉避免干擾
