@@ -1,4 +1,4 @@
-# Generated for Clash Verge - 手動更新版
+# Generated for Clash Verge - 手動更新版 N1
 mode: rule
 mixed-port: 7897
 socks-port: 7898
@@ -43,21 +43,23 @@ proxy-providers:
       interval: 300
 
 proxy-groups:
-# 🇸🇬 新加坡 - 篩選 Singapore 01 到 05
+# 🇸🇬 新加坡 - 自動選擇延遲最低節點，每 30 秒檢測一次
 - name: 🇸🇬 新加坡
-  type: fallback
+  type: url-test
   use: [shanhuyun]
   filter: "Singapore 0[1-5]"
   url: "https://www.gstatic.com/generate_204"
-  interval: 15
+  interval: 30
+  tolerance: 50
 
-# 🇯🇵 日本 - 篩選 Japan 01 到 05
+# 🇯🇵 日本 - 自動選擇延遲最低節點，每 30 秒檢測一次
 - name: 🇯🇵 日本
-  type: fallback
+  type: url-test
   use: [shanhuyun]
   filter: "Japan 0[1-5]"
   url: "https://www.gstatic.com/generate_204"
-  interval: 15
+  interval: 30
+  tolerance: 50
 
 # 🚀 出口選擇
 - name: 🚀 Proxy
