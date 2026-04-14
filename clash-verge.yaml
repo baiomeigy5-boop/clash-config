@@ -1,4 +1,4 @@
-# Generated for Clash Verge - 內嵌節點最終版
+# Generated for Clash Verge - 新加坡專用 (已整合轉化邏輯)
 mode: rule
 mixed-port: 7897
 socks-port: 7898
@@ -30,24 +30,28 @@ dns:
     - www.msftncsi.com
     - www.msftconnecttest.com
 
-# --- 請在這裡貼上你從瀏覽器複製的節點內容 ---
-# 格式範例：
-# proxies:
-#   - name: "新加坡Z01⚡️IEPL"
-#     type: ss
-#     server: ...
-# ---------------------------------------
-proxies:
-  # (這裡請貼上瀏覽器下載下來的所有節點)
+proxy-providers:
+  shanhuyun:
+    type: http
+    # 重點：我幫你把通用連結加上了轉換參數，這樣 Clash 就能讀懂了
+    url: "https://sub.v1.mk/sub?target=clash&url=https%3A%2F%2Fccyz.vpjs.de%2Flink-c%3Ftoken%3Df0daa37a50d85f26e62d89521d37a28f&insert=false&emoji=true&list=false&tfo=false&scv=false&fdn=false&sort=false&new_name=true"
+    interval: 3600
+    path: ./providers/shanhuyun.yaml
+    health-check:
+      enable: true
+      url: "https://www.gstatic.com/generate_204"
+      interval: 300
 
 proxy-groups:
+  # 🇸🇬 新加坡 - 根據你截圖的名稱進行篩選
   - name: 🇸🇬 新加坡
-    type: select
-    # 這裡改用手動列出名稱，或直接引用所有節點
-    # 如果節點太多，可以保持原本的 select 並手動在介面選
-    proxies:
-      - DIRECT
-      # 下面會自動出現你貼上的節點名稱
+    type: url-test
+    use: [shanhuyun]
+    # 同時匹配簡體與繁體新加坡，並鎖定 Z01~Z03
+    filter: "(新加坡|新加坡).*Z0"
+    url: "https://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
 
   - name: 🚀 Proxy
     type: select
@@ -56,5 +60,7 @@ proxy-groups:
       - DIRECT
 
 rules:
+  # 區域網路直連
   - GEOIP,LAN,DIRECT
+  # 所有流量強制走新加坡
   - MATCH,🚀 Proxy
