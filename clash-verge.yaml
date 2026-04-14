@@ -1,4 +1,4 @@
-# Generated for Clash Verge - 新加坡節點名稱修正版
+# Generated for Clash Verge - 新加坡全抓取版
 mode: rule
 mixed-port: 7897
 socks-port: 7898
@@ -42,12 +42,11 @@ proxy-providers:
       interval: 300
 
 proxy-groups:
-  # 🇸🇬 新加坡 - 修正篩選邏輯，只要名稱同時包含「新加坡」與「Z0」就會抓取
+  # 🇸🇬 新加坡 - 只要名字裡有「新加坡」這三個字的全部抓進來
   - name: 🇸🇬 新加坡
     type: url-test
     use: [shanhuyun]
-    # 使用關鍵字組合比對，避開特殊符號干擾
-    filter: "新加坡.*Z0"
+    filter: "新加坡"
     url: "https://www.gstatic.com/generate_204"
     interval: 30
     tolerance: 50
@@ -59,7 +58,7 @@ proxy-groups:
       - DIRECT
 
 rules:
-  # 確保區域網路直連（管理主板機用）
+  # 區域網路直連（這行一定要留著，不然你連不到主板機的控制端）
   - GEOIP,LAN,DIRECT
-  # 所有流量強制走新加坡
+  # 其他所有流量全部強制走新加坡
   - MATCH,🚀 Proxy
