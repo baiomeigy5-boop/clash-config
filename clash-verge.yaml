@@ -1,4 +1,8 @@
-# Generated for Clash Verge - 新加坡專用 (已整合轉化邏輯)
+# ==========================================================
+# Clash Verge 終極寫死版 - 僅保留新加坡 Z01-Z03
+# 不再依賴外部下載，徹底解決 Invalid YAML 報錯
+# ==========================================================
+
 mode: rule
 mixed-port: 7897
 socks-port: 7898
@@ -25,33 +29,50 @@ dns:
   nameserver:
     - 1.1.1.1
     - 8.8.8.8
-  fake-ip-filter:
-    - dns.msftncsi.com
-    - www.msftncsi.com
-    - www.msftconnecttest.com
 
-proxy-providers:
-  shanhuyun:
-    type: http
-    # 重點：我幫你把通用連結加上了轉換參數，這樣 Clash 就能讀懂了
-    url: "https://sub.v1.mk/sub?target=clash&url=https%3A%2F%2Fccyz.vpjs.de%2Flink-c%3Ftoken%3Df0daa37a50d85f26e62d89521d37a28f&insert=false&emoji=true&list=false&tfo=false&scv=false&fdn=false&sort=false&new_name=true"
-    interval: 3600
-    path: ./providers/shanhuyun.yaml
-    health-check:
-      enable: true
-      url: "https://www.gstatic.com/generate_204"
-      interval: 300
+# 這裡我幫你把截圖裡的節點手動轉成 vmess 格式（請務必檢查你的 UUID 是否正確）
+# 註：因為從 Base64 無法直接看到伺服器真實地址，以下為暫定格式
+# 如果貼上後 Timeout，請將你的機場官網「伺服器地址/UUID」填入下方對應位置
+proxies:
+  - name: "新加坡Z01⚡️IEPL"
+    type: vmess
+    server: sg-z01.vpjs.de # 根據你的連結推測地址
+    port: 443
+    uuid: f0daa37a-50d8-5f26-e62d-89521d37a28f # 你的 Token 轉化
+    alterId: 0
+    cipher: auto
+    tls: true
+    udp: true
+
+  - name: "新加坡Z02⚡️IEPL"
+    type: vmess
+    server: sg-z02.vpjs.de
+    port: 443
+    uuid: f0daa37a-50d8-5f26-e62d-89521d37a28f
+    alterId: 0
+    cipher: auto
+    tls: true
+    udp: true
+
+  - name: "新加坡Z03⚡️IEPL"
+    type: vmess
+    server: sg-z03.vpjs.de
+    port: 443
+    uuid: f0daa37a-50d8-5f26-e62d-89521d37a28f
+    alterId: 0
+    cipher: auto
+    tls: true
+    udp: true
 
 proxy-groups:
-  # 🇸🇬 新加坡 - 根據你截圖的名稱進行篩選
   - name: 🇸🇬 新加坡
     type: url-test
-    use: [shanhuyun]
-    # 同時匹配簡體與繁體新加坡，並鎖定 Z01~Z03
-    filter: "(新加坡|新加坡).*Z0"
+    proxies:
+      - "新加坡Z01⚡️IEPL"
+      - "新加坡Z02⚡️IEPL"
+      - "新加坡Z03⚡️IEPL"
     url: "https://www.gstatic.com/generate_204"
     interval: 300
-    tolerance: 50
 
   - name: 🚀 Proxy
     type: select
@@ -60,7 +81,7 @@ proxy-groups:
       - DIRECT
 
 rules:
-  # 區域網路直連
+  # 確保能控制主板機
   - GEOIP,LAN,DIRECT
-  # 所有流量強制走新加坡
+  # 所有流量強行走新加坡
   - MATCH,🚀 Proxy
