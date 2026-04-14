@@ -1,4 +1,4 @@
-# Generated for Clash Verge - 新加坡多重編碼兼容版
+# Generated for Clash Verge - 內嵌節點最終版
 mode: rule
 mixed-port: 7897
 socks-port: 7898
@@ -30,27 +30,24 @@ dns:
     - www.msftncsi.com
     - www.msftconnecttest.com
 
-proxy-providers:
-  shanhuyun:
-    type: http
-    url: "https://ccyz.vpjs.de/link-c?token=f0daa37a50d85f26e62d89521d37a28f"
-    interval: 3600
-    path: ./providers/shanhuyun.yaml
-    health-check:
-      enable: true
-      url: "https://www.gstatic.com/generate_204"
-      interval: 300
+# --- 請在這裡貼上你從瀏覽器複製的節點內容 ---
+# 格式範例：
+# proxies:
+#   - name: "新加坡Z01⚡️IEPL"
+#     type: ss
+#     server: ...
+# ---------------------------------------
+proxies:
+  # (這裡請貼上瀏覽器下載下來的所有節點)
 
 proxy-groups:
-  # 🇸🇬 新加坡 - 同時支援繁體「新加坡」、簡體「新加坡」與英文「Singapore」
   - name: 🇸🇬 新加坡
-    type: url-test
-    use: [shanhuyun]
-    # 使用 | (或) 符號來匹配不同的字元編碼
-    filter: "新加坡|新加坡|Singapore|SG"
-    url: "https://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
+    type: select
+    # 這裡改用手動列出名稱，或直接引用所有節點
+    # 如果節點太多，可以保持原本的 select 並手動在介面選
+    proxies:
+      - DIRECT
+      # 下面會自動出現你貼上的節點名稱
 
   - name: 🚀 Proxy
     type: select
