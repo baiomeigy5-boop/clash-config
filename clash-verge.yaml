@@ -1,5 +1,5 @@
-# Generated for Clash Verge - 強制全域版 (Global Mode)
-mode: global  # 直接切換到全域模式，不走任何分流規則
+# Generated for Clash Verge - 新加坡⚡️精準過濾版
+mode: rule
 mixed-port: 7897
 socks-port: 7898
 port: 7899
@@ -42,12 +42,24 @@ proxy-providers:
       interval: 300
 
 proxy-groups:
+  # 🇸🇬 新加坡 - 修正篩選邏輯，只要名稱同時包含「新加坡」與「Z0」就會抓取
   - name: 🇸🇬 新加坡
     type: url-test
     use: [shanhuyun]
-    filter: "新加坡"
+    # 精準篩選：同時包含「新加坡」和「Z0」的節點（也就是 Z01, Z02, Z03）
+    filter: "(?=.*新加坡)(?=.*Z0)"
     url: "https://www.gstatic.com/generate_204"
-    interval: 30
+    interval: 300  # 延長檢測間隔，降低主板機負載
     tolerance: 50
 
-# 全域模式下，Clash 會直接使用 GLOBAL 組，請在介面手動勾選「🇸🇬 新加坡」
+  - name: 🚀 Proxy
+    type: select
+    proxies:
+      - 🇸🇬 新加坡
+      - DIRECT
+
+rules:
+  # 確保區域網路直連（管理主板機用）
+  - GEOIP,LAN,DIRECT
+  # 所有流量強制走新加坡
+  - MATCH,🚀 Proxy
