@@ -1,4 +1,4 @@
-# Generated for Clash Verge - 手動更新版 N1 (Singapore Only)
+# Generated for Clash Verge - 全域新加坡強制版
 mode: rule
 mixed-port: 7897
 socks-port: 7898
@@ -33,7 +33,6 @@ dns:
 proxy-providers:
   shanhuyun:
     type: http
-    # 已更新為你的新訂閱連結
     url: "https://ccyz.vpjs.de/link-c?token=f0daa37a50d85f26e62d89521d37a28f"
     interval: 3600
     path: ./providers/shanhuyun.yaml
@@ -43,17 +42,14 @@ proxy-providers:
       interval: 300
 
 proxy-groups:
-  # 🇸🇬 新加坡 - 自動選擇 Z01 ~ Z03 中延遲最低的節點
   - name: 🇸🇬 新加坡
     type: url-test
     use: [shanhuyun]
-    # 篩選名稱包含 新加坡Z01, 新加坡Z02, 新加坡Z03 的節點
     filter: "新加坡Z0[1-3]"
     url: "https://www.gstatic.com/generate_204"
     interval: 30
     tolerance: 50
 
-  # 🚀 出口選擇 - 僅保留新加坡與直連
   - name: 🚀 Proxy
     type: select
     proxies:
@@ -61,6 +57,7 @@ proxy-groups:
       - DIRECT
 
 rules:
+  # 僅保留區域網路直連，避免無法控制主板機
   - GEOIP,LAN,DIRECT
-  - GEOIP,CN,DIRECT
+  # 剩下的所有流量（包含所有網站與 App）全部強制走新加坡
   - MATCH,🚀 Proxy
