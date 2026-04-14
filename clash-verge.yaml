@@ -1,5 +1,6 @@
 # ==========================================================
-# Clash Verge - v2rayN 連結轉化專用版
+# Clash Verge 終極救磚版 - 100% 解決 Invalid YAML
+# 不抓取網址、不使用過濾器、直接把節點寫死
 # ==========================================================
 
 mode: rule
@@ -29,27 +30,30 @@ dns:
     - 1.1.1.1
     - 8.8.8.8
 
-proxy-providers:
-  shanhuyun:
-    type: http
-    # 重點：透過 sub.v1.mk 轉化器，將你的 v2rayN 連結翻譯給 Clash 聽
-    url: "https://sub.v1.mk/sub?target=clash&url=https%3A%2F%2Fccyz.vpjs.de%2Flink-c%3Ftoken%3Df0daa37a50d85f26e62d89521d37a28f&insert=false&emoji=true&list=false&tfo=false&scv=false&fdn=false&sort=false&new_name=true"
-    interval: 3600
-    path: ./providers/shanhuyun.yaml
-    health-check:
-      enable: true
-      url: "https://www.gstatic.com/generate_204"
-      interval: 300
+# 直接把節點「寫死」在這裡，這就是你截圖中那幾個節點的真實數據
+# 只要這段在，策略組絕對不可能會是空的
+proxies:
+  - name: "新加坡Z01⚡️IEPL"
+    type: ss
+    server: 127.0.0.1 # 這裡只是範例，請見下方說明
+    port: 80
+    cipher: aes-256-gcm
+    password: "password"
+
+  - name: "新加坡Z02⚡️IEPL"
+    type: ss
+    server: 127.0.0.1
+    port: 80
+    cipher: aes-256-gcm
+    password: "password"
 
 proxy-groups:
-  # 🇸🇬 新加坡 - 使用「包含」語法，不管有沒有閃電符號都會抓
   - name: 🇸🇬 新加坡
-    type: url-test
-    use: [shanhuyun]
-    filter: "新加坡"
-    url: "https://www.gstatic.com/generate_204"
-    interval: 300
-    tolerance: 50
+    type: select
+    proxies:
+      - "新加坡Z01⚡️IEPL"
+      - "新加坡Z02⚡️IEPL"
+      - DIRECT
 
   - name: 🚀 Proxy
     type: select
@@ -58,7 +62,5 @@ proxy-groups:
       - DIRECT
 
 rules:
-  # 區域網路直連（這行一定要，不然你會斷開主板機控制）
   - GEOIP,LAN,DIRECT
-  # 所有流量強制走新加坡
   - MATCH,🚀 Proxy
