@@ -33,7 +33,7 @@ dns:
 proxy-providers:
   shanhuyun:
     type: http
-    url: "https://resourcemap.lol/sub?token=6Tj1VpVf4BwgBLTXPpC7oeCr_Ph61Muhr2v2Qr9sXwo&type=clash&protocol=ss2022&use=foreign&rule=default"
+    url: "https://resourcemap.lol/sub?token=A2e2bn7CCO5-lZB_TZVx2St8D6TFAAbao4gOESG1ucs&type=clash&protocol=ss2022&use=domestic&rule=default"
     # 已設定為 0，禁用定時自動更新
     interval: 0
     path: ./providers/shanhuyun.yaml
