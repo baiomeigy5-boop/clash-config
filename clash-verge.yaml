@@ -1,4 +1,4 @@
-# Generated for Clash Verge - 新加坡⚡️精準過濾版
+# Generated for Clash Verge - 新加坡多重編碼兼容版
 mode: rule
 mixed-port: 7897
 socks-port: 7898
@@ -42,14 +42,14 @@ proxy-providers:
       interval: 300
 
 proxy-groups:
-  # 🇸🇬 新加坡 - 修正篩選邏輯，只要名稱同時包含「新加坡」與「Z0」就會抓取
+  # 🇸🇬 新加坡 - 同時支援繁體「新加坡」、簡體「新加坡」與英文「Singapore」
   - name: 🇸🇬 新加坡
     type: url-test
     use: [shanhuyun]
-    # 精準篩選：同時包含「新加坡」和「Z0」的節點（也就是 Z01, Z02, Z03）
-    filter: "(?=.*新加坡)(?=.*Z0)"
+    # 使用 | (或) 符號來匹配不同的字元編碼
+    filter: "新加坡|新加坡|Singapore|SG"
     url: "https://www.gstatic.com/generate_204"
-    interval: 300  # 延長檢測間隔，降低主板機負載
+    interval: 300
     tolerance: 50
 
   - name: 🚀 Proxy
@@ -59,7 +59,5 @@ proxy-groups:
       - DIRECT
 
 rules:
-  # 確保區域網路直連（管理主板機用）
   - GEOIP,LAN,DIRECT
-  # 所有流量強制走新加坡
   - MATCH,🚀 Proxy
